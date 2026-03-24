@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>RLS Automation</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;500;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#080808;--s:#111;--s2:#181818;--s3:#1f1f1f;--b:#242424;--b2:#2f2f2f;--a:#c8f135;--ag:rgba(200,241,53,0.15);--ad:rgba(200,241,53,0.08);--t:#f2f2f2;--t2:#aaa;--m:#555;--red:#ff4d4d;--green:#4ade80;--yellow:#fbbf24;--blue:#60a5fa}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:'DM Sans',sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased}
+header{background:rgba(8,8,8,0.96);border-bottom:1px solid var(--b);padding:0 24px;height:54px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
+.logo{width:30px;height:30px;background:var(--a);border-radius:7px;display:grid;place-items:center;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:#000;flex-shrink:0}
+.lt{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--a)}
+.hp{margin-left:auto;display:flex;align-items:center;gap:8px}
+.sarah-status{padding:4px 12px;border-radius:20px;font-family:'Space Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border:none;transition:all .2s}
+.sarah-on{background:rgba(74,222,128,0.15);color:var(--green);border:1px solid rgba(74,222,128,0.3)}
+.sarah-off{background:rgba(255,77,77,0.15);color:var(--red);border:1px solid rgba(255,77,77,0.3)}
+.tabs{display:flex;border-bottom:1px solid var(--b);background:var(--s);padding:0 20px;overflow-x:auto}
+.tab{padding:13px 16px;font-family:'Space Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--m);cursor:pointer;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;white-space:nowrap}
+.tab.active{color:var(--a);border-bottom-color:var(--a)}
+.tc{display:none;padding:20px;max-width:1000px;margin:0 auto}
+.tc.active{display:block}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.card{background:var(--s);border:1px solid var(--b);border-radius:13px;padding:20px;margin-bottom:12px}
+.cl{font-family:'Space Mono',monospace;font-size:8px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--m);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.cl::after{content:'';flex:1;height:1px;background:var(--b)}
+.sv{font-size:clamp(26px,5vw,40px);font-weight:700;color:var(--a);font-family:'Space Mono',monospace;line-height:1}
+.sl{font-size:11px;color:var(--m);margin-top:3px;font-weight:300}
+.ir{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--b);font-size:13px}
+.ir:last-child{border-bottom:none}
+.il{color:var(--t2)}
+.iv{font-family:'Space Mono',monospace;font-size:11px;color:var(--a)}
+.btn{border:none;border-radius:7px;cursor:pointer;font-family:'Space Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.06em;padding:10px 14px;transition:opacity .15s,box-shadow .2s,transform .1s;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn:active:not(:disabled){transform:scale(.97)}
+.btn:disabled{opacity:.3;cursor:not-allowed}
+.bp{background:var(--a);color:#000}.bp:hover:not(:disabled){box-shadow:0 0 18px 3px var(--ag)}
+.bs{background:var(--s2);color:var(--t2);border:1px solid var(--b2)}.bs:hover:not(:disabled){border-color:var(--a);color:var(--a)}
+.bd{background:rgba(255,77,77,0.1);color:var(--red);border:1px solid rgba(255,77,77,0.2)}.bd:hover:not(:disabled){background:rgba(255,77,77,0.2)}
+.bw{width:100%}
+.fi{display:flex;flex-direction:column;gap:5px;margin-bottom:11px}
+.fi label{font-family:'Space Mono',monospace;font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--m)}
+input,textarea{width:100%;background:var(--bg);border:1px solid var(--b);border-radius:7px;color:var(--t);font-family:'DM Sans',sans-serif;font-size:14px;padding:10px 12px;outline:none;transition:border-color .18s}
+input:focus,textarea:focus{border-color:var(--a)}
+input::placeholder,textarea::placeholder{color:var(--m)}
+textarea{resize:vertical;min-height:110px;line-height:1.5}
+.log{background:var(--bg);border:1px solid var(--b);border-radius:7px;padding:11px;font-family:'Space Mono',monospace;font-size:10px;min-height:70px;max-height:130px;overflow-y:auto;line-height:1.6;margin-top:9px}
+.le{margin-bottom:2px}
+.le.success{color:var(--green)}.le.error{color:var(--red)}.le.info{color:var(--a)}.le.warn{color:var(--yellow)}
+.badge{display:inline-block;padding:2px 7px;border-radius:20px;font-family:'Space Mono',monospace;font-size:8px;font-weight:700}
+.bg{background:rgba(74,222,128,0.1);color:var(--green);border:1px solid rgba(74,222,128,0.2)}
+.br{background:rgba(255,77,77,0.1);color:var(--red);border:1px solid rgba(255,77,77,0.2)}
+.by{background:rgba(251,191,36,0.1);color:var(--yellow);border:1px solid rgba(251,191,36,0.2)}
+.bgr{background:var(--s2);color:var(--m);border:1px solid var(--b)}
+.bb{background:rgba(96,165,250,0.1);color:var(--blue);border:1px solid rgba(96,165,250,0.2)}
+.qi{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:10px;padding:11px 13px;background:var(--s);border:1px solid var(--b);border-radius:8px;margin-bottom:6px}
+.qn{font-size:13px;font-weight:600}
+.qp{font-family:'Space Mono',monospace;font-size:10px;color:var(--a);margin-top:2px}
+.tc-card{background:var(--s);border:1px solid var(--b);border-radius:10px;padding:14px;margin-bottom:9px}
+.tc-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}
+.tc-n{font-size:13px;font-weight:600}
+.tc-t{font-size:10px;color:var(--m)}
+.tc-b{font-size:11px;color:var(--t2);line-height:1.6;max-height:110px;overflow-y:auto}
+.tc-sarah{color:var(--a)}
+.tc-lead{color:var(--t)}
+.insight{background:var(--s2);border:1px solid var(--b2);border-left:3px solid var(--a);border-radius:7px;padding:12px;margin-bottom:7px;font-size:12px;color:var(--t2);line-height:1.5}
+.technique{background:var(--s2);border:1px solid var(--b2);border-left:3px solid var(--blue);border-radius:7px;padding:12px;margin-bottom:7px;font-size:12px;color:var(--t2);line-height:1.5}
+.vc{background:var(--s2);border:1px solid var(--b2);border-radius:8px;padding:14px;margin-bottom:9px}
+.vc-t{font-size:13px;font-weight:600;color:var(--t);margin-bottom:3px}
+.vc-c{font-size:11px;color:var(--m);margin-bottom:8px}
+.pb{background:var(--b);border-radius:4px;height:5px;margin-top:7px;overflow:hidden}
+.pf{background:var(--a);height:100%;border-radius:4px;transition:width .3s}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@media(max-width:600px){.g2,.g3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">RLS</div>
+  <div class="lt">Automation Hub</div>
+  <div class="hp">
+    <button class="sarah-status sarah-on" id="sarahToggle" onclick="toggleSarah()">● SARAH ON</button>
+  </div>
+</header>
+<div class="tabs">
+  <div class="tab active" onclick="showTab('dashboard')">Dashboard</div>
+  <div class="tab" onclick="showTab('queue')">📞 Queue</div>
+  <div class="tab" onclick="showTab('texter')">💬 Texter</div>
+  <div class="tab" onclick="showTab('transcripts')">📋 Transcripts</div>
+  <div class="tab" onclick="showTab('training')">🎓 Training</div>
+  <div class="tab" onclick="showTab('sarah')">🧠 Sarah AI</div>
+</div>
+<div id="tab-dashboard" class="tc active">
+  <div class="g3" style="margin-bottom:14px">
+    <div class="card"><div class="sv" id="s-total">—</div><div class="sl">Total Calls</div></div>
+    <div class="card"><div class="sv" id="s-transfers">—</div><div class="sl">Transfers</div></div>
+    <div class="card"><div class="sv" id="s-vm">—</div><div class="sl">Voicemails</div></div>
+  </div>
+  <div class="g2">
+    <div class="card">
+      <div class="cl">Quick Call</div>
+      <div class="fi"><label>Business Name</label><input type="text" id="callBiz" placeholder="e.g. Mike's Barbershop"/></div>
+      <div class="fi"><label>Phone Number</label><input type="tel" id="callPhone" placeholder="+15551234567"/></div>
+      <button class="btn bp bw" onclick="makeCall()">📞 Call Now</button>
+      <div class="log" id="callLog"><div class="le info">Ready...</div></div>
+    </div>
+    <div class="card">
+      <div class="cl">Next Transfer</div>
+      <div id="nextTransferInfo" style="font-size:14px;color:var(--t2);margin-bottom:14px">Loading...</div>
+      <div style="height:1px;background:var(--b);margin-bottom:14px"></div>
+      <div class="cl">Stats</div>
+      <div class="ir"><span class="il">Rick Transfers</span><span class="iv" id="d-rick">—</span></div>
+      <div class="ir"><span class="il">Vedder Transfers</span><span class="iv" id="d-vedder">—</span></div>
+      <div class="ir"><span class="il">No Answers</span><span class="iv" id="d-na">—</span></div>
+      <div class="ir"><span class="il">Queue</span><span id="d-queue" class="iv">—</span></div>
+    </div>
+  </div>
+</div>
+<div id="tab-queue" class="tc">
+  <div class="card">
+    <div class="cl">Add Leads to Queue</div>
+    <div class="fi"><label>One lead per line: Business Name, Phone Number</label><textarea id="queueInput" placeholder="Mike's Barbershop, +15551234567&#10;Legacy HVAC, +15559876543&#10;Sam's Auto Repair, +15554567890"></textarea></div>
+    <button class="btn bs" onclick="addToQueue()">➕ Add to Queue</button>
+    <div class="log" id="queueLog"><div class="le info">Paste leads above...</div></div>
+  </div>
+  <div class="card">
+    <div class="cl">Controls</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+      <button class="btn bp" onclick="startQueue()">▶ Start</button>
+      <button class="btn bs" onclick="pauseQueue()">⏸ Pause</button>
+      <button class="btn bs" onclick="resumeQueue()">▶ Resume</button>
+      <button class="btn bd" onclick="clearQueue()">🗑 Clear</button>
+    </div>
+    <div style="margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--m);margin-bottom:4px">
+        <span id="qPText">No active queue</span><span id="qPPct"></span>
+      </div>
+      <div class="pb"><div class="pf" id="pFill" style="width:0%"></div></div>
+    </div>
+    <div id="queueItems"></div>
+  </div>
+</div>
+<div id="tab-texter" class="tc">
+  <div class="g2">
+    <div class="card">
+      <div class="cl">Follow-Up Texter</div>
+      <div class="ir"><span class="il">Rick</span><span class="iv">(585) 738-5741</span></div>
+      <div class="ir"><span class="il">Vedder</span><span class="iv">(315) 520-1443</span></div>
+      <div class="ir"><span class="il">Time</span><span class="iv">9:30 AM EST</span></div>
+      <div class="ir"><span class="il">Days</span><span class="iv">Mon–Fri</span></div>
+      <div class="ir"><span class="il">Skips</span><span class="iv">Fuck Em status</span></div>
+      <button class="btn bp bw" style="margin-top:14px" onclick="testTexter()">📱 Send Test Now</button>
+      <div class="log" id="texterLog"><div class="le info">Ready...</div></div>
+    </div>
+    <div class="card">
+      <div class="cl">Today's Follow-Ups</div>
+      <button class="btn bs bw" onclick="loadLeads()" style="margin-bottom:12px">🔄 Load from CRM</button>
+      <div id="leadsContainer" style="font-size:13px;color:var(--t2)">Click Load to see today's list</div>
+    </div>
+  </div>
+</div>
+<div id="tab-transcripts" class="tc">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+    <div style="font-size:13px;color:var(--t2)" id="transcriptCount">Loading...</div>
+    <button class="btn bs" onclick="loadTranscripts()">🔄 Refresh</button>
+  </div>
+  <div id="transcriptsList"></div>
+</div>
+<div id="tab-training" class="tc">
+  <div class="card">
+    <div class="cl">🎓 Add YouTube Training Video</div>
+    <p style="font-size:13px;color:var(--t2);margin-bottom:14px;line-height:1.5">Paste a YouTube sales training video URL. Sarah extracts the best techniques and uses them on every future call.</p>
+    <div class="fi"><label>YouTube URL</label><input type="text" id="ytUrl" placeholder="https://youtube.com/watch?v=..."/></div>
+    <button class="btn bp bw" onclick="addTraining()">🎬 Extract Techniques</button>
+    <div class="log" id="trainingLog"><div class="le info">Paste a YouTube URL above...</div></div>
+  </div>
+  <div class="card">
+    <div class="cl">Trained Videos</div>
+    <div id="videosList"><div style="color:var(--m);font-size:13px">No videos added yet</div></div>
+  </div>
+  <div class="card">
+    <div class="cl">Extracted Techniques</div>
+    <div id="techniquesList"><div style="color:var(--m);font-size:13px">No techniques yet</div></div>
+  </div>
+</div>
+<div id="tab-sarah" class="tc">
+  <div class="card">
+    <div class="cl">🧠 Learned from Real Calls</div>
+    <div id="learningsContainer"><div style="color:var(--m);font-size:13px">No learnings yet — make some calls!</div></div>
+  </div>
+  <div class="card">
+    <div class="cl">Round Robin</div>
+    <div class="g2">
+      <div><div style="font-size:10px;color:var(--m);margin-bottom:4px">Rick Transfers</div><div class="sv" id="rickCount">—</div></div>
+      <div><div style="font-size:10px;color:var(--m);margin-bottom:4px">Vedder Transfers</div><div class="sv" id="vedderCount">—</div></div>
+    </div>
+    <div style="margin-top:12px;font-size:13px;color:var(--t2)">Next transfer: <span id="nextTransferName" style="color:var(--a);font-weight:700">—</span></div>
+  </div>
+  <div class="card">
+    <div class="cl">Scheduled Callbacks</div>
+    <button class="btn bs" onclick="loadCallbacks()" style="margin-bottom:12px">🔄 Load</button>
+    <div id="callbacksList"><div style="color:var(--m);font-size:13px">Click load to see scheduled callbacks</div></div>
+  </div>
+</div>
+<script>
+let sarahEnabled=true,queuePoll=null;
+async function toggleSarah(){
+  const btn=document.getElementById("sarahToggle");
+  const r=await fetch(sarahEnabled?"/api/sarah/disable":"/api/sarah/enable",{method:"POST"});
+  const d=await r.json();
+  sarahEnabled=d.enabled;
+  btn.textContent=sarahEnabled?"● SARAH ON":"● SARAH OFF";
+  btn.className="sarah-status "+(sarahEnabled?"sarah-on":"sarah-off");
+}
+function showTab(name){
+  const tabs=["dashboard","queue","texter","transcripts","training","sarah"];
+  document.querySelectorAll(".tab").forEach((t,i)=>t.classList.toggle("active",tabs[i]===name));
+  document.querySelectorAll(".tc").forEach(c=>c.classList.remove("active"));
+  document.getElementById("tab-"+name).classList.add("active");
+  if(name==="dashboard")loadStats();
+  if(name==="queue"){loadQueue();if(!queuePoll)queuePoll=setInterval(loadQueue,5000);}
+  if(name==="transcripts")loadTranscripts();
+  if(name==="training")loadTraining();
+  if(name==="sarah")loadSarah();
+}
+function addLog(id,msg,type="info"){
+  const log=document.getElementById(id);if(!log)return;
+  const e=document.createElement("div");e.className="le "+type;
+  e.textContent=new Date().toLocaleTimeString()+" — "+msg;
+  log.appendChild(e);log.scrollTop=log.scrollHeight;
+}
+async function loadStats(){
+  try{
+    const[stats,queue,sarah]=await Promise.all([
+      fetch("/api/stats").then(r=>r.json()),
+      fetch("/api/queue").then(r=>r.json()),
+      fetch("/api/sarah/status").then(r=>r.json()),
+    ]);
+    document.getElementById("s-total").textContent=stats.totalCalls||0;
+    document.getElementById("s-transfers").textContent=stats.transfers||0;
+    document.getElementById("s-vm").textContent=stats.voicemails||0;
+    document.getElementById("d-rick").textContent=stats.rickTransfers||0;
+    document.getElementById("d-vedder").textContent=stats.vedderTransfers||0;
+    document.getElementById("d-na").textContent=stats.noAnswers||0;
+    document.getElementById("d-queue").textContent=queue.active?(queue.paused?"Paused":"Running"):"Idle";
+    document.getElementById("nextTransferInfo").innerHTML='Next → <span style="color:var(--a);font-weight:700;font-family:Space Mono,monospace">'+(stats.nextTransferTo==="rick"?"Rick":"Vedder")+"</span>";
+    sarahEnabled=sarah.sarahEnabled;
+    const btn=document.getElementById("sarahToggle");
+    btn.textContent=sarahEnabled?"● SARAH ON":"● SARAH OFF";
+    btn.className="sarah-status "+(sarahEnabled?"sarah-on":"sarah-off");
+  }catch(e){}
+}
+async function makeCall(){
+  const biz=document.getElementById("callBiz").value.trim();
+  const phone=document.getElementById("callPhone").value.trim();
+  if(!biz||!phone)return addLog("callLog","Enter business and phone","error");
+  addLog("callLog","Calling "+biz+"...","info");
+  try{
+    const r=await fetch("/api/call",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phone,businessName:biz})});
+    const d=await r.json();
+    if(d.success)addLog("callLog","✓ Sarah is calling "+biz,"success");
+    else addLog("callLog","Error: "+d.error,"error");
+  }catch(e){addLog("callLog","Error: "+e.message,"error");}
+}
+async function addToQueue(){
+  const raw=document.getElementById("queueInput").value.trim();
+  if(!raw)return addLog("queueLog","Paste leads first","error");
+  const leads=raw.split("\n").map(l=>l.trim()).filter(Boolean).map(line=>{
+    const parts=line.split(",").map(p=>p.trim());
+    return{name:parts[0]||"Unknown",phone:parts[1]||""};
+  }).filter(l=>l.phone);
+  if(!leads.length)return addLog("queueLog","No valid leads. Format: Name, Phone","error");
+  const r=await fetch("/api/queue/add",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({leads})});
+  const d=await r.json();
+  if(d.success){addLog("queueLog","✓ Added "+d.added+" leads","success");document.getElementById("queueInput").value="";loadQueue();}
+  else addLog("queueLog","Error: "+d.error,"error");
+}
+async function startQueue(){const r=await fetch("/api/queue/start",{method:"POST"});const d=await r.json();if(d.success)addLog("queueLog","✓ Queue started!","success");else addLog("queueLog","Error: "+d.error,"error");loadQueue();}
+async function pauseQueue(){await fetch("/api/queue/pause",{method:"POST"});addLog("queueLog","Queue paused","warn");loadQueue();}
+async function resumeQueue(){await fetch("/api/queue/resume",{method:"POST"});addLog("queueLog","Queue resumed","info");loadQueue();}
+async function clearQueue(){if(!confirm("Clear queue?"))return;await fetch("/api/queue/clear",{method:"POST"});addLog("queueLog","Queue cleared","warn");loadQueue();}
+async function loadQueue(){
+  try{
+    const q=await fetch("/api/queue").then(r=>r.json());
+    const total=q.items.length,done=(q.completed||0)+(q.failed||0);
+    const pct=total?Math.round((done/total)*100):0;
+    document.getElementById("qPText").textContent=total?(q.active?(q.paused?"⏸ Paused":"▶ Running"):"Idle")+" — "+done+"/"+total:"No active queue";
+    document.getElementById("qPPct").textContent=total?pct+"%":"";
+    document.getElementById("pFill").style.width=pct+"%";
+    const c=document.getElementById("queueItems");
+    if(!q.items.length){c.innerHTML='<div style="color:var(--m);font-size:13px;text-align:center;padding:16px">Queue is empty</div>';return;}
+    const sc=s=>s==="completed"?"bg":s==="calling"?"bb":s==="pending"?"bgr":"br";
+    c.innerHTML=q.items.slice(0,25).map(i=>'<div class="qi"><div><div class="qn">'+i.name+'</div><div class="qp">'+i.phone+'</div></div><span class="badge '+sc(i.status)+'">'+i.status+'</span></div>').join("")+(q.items.length>25?'<div style="color:var(--m);font-size:11px;text-align:center;padding:8px">+'+(q.items.length-25)+' more</div>':"");
+  }catch(e){}
+}
+async function testTexter(){
+  addLog("texterLog","Sending texts...","info");
+  const r=await fetch("/api/test-texter",{method:"POST"});
+  const d=await r.json();
+  if(d.success)addLog("texterLog","✓ Texts sent!","success");
+  else addLog("texterLog","Error: "+d.error,"error");
+}
+async function loadLeads(){
+  document.getElementById("leadsContainer").innerHTML='<span style="color:var(--a)">Loading...</span>';
+  const d=await fetch("/api/leads").then(r=>r.json());
+  if(!d.leads.length){document.getElementById("leadsContainer").innerHTML="No follow-ups today.";return;}
+  document.getElementById("leadsContainer").innerHTML=d.leads.map(l=>'<div style="padding:9px 0;border-bottom:1px solid var(--b)"><div style="font-weight:600">'+l.name+'</div><div style="font-family:Space Mono,monospace;font-size:10px;color:var(--a);margin:2px 0">'+l.phone+'</div><div style="font-size:11px;color:var(--m)">'+(l.notes||"No notes")+'</div></div>').join("");
+}
+async function loadTranscripts(){
+  const transcripts=await fetch("/api/transcripts").then(r=>r.json());
+  document.getElementById("transcriptCount").textContent=transcripts.length+" calls recorded";
+  if(!transcripts.length){document.getElementById("transcriptsList").innerHTML='<div style="color:var(--m);text-align:center;padding:40px">No transcripts yet</div>';return;}
+  const oc=t=>t==="transferred"?"bg":["failed","hung_up"].includes(t)?"br":"bgr";
+  const ol=t=>t==="transferred"?"✓ Transferred"+(t.transferredTo?" to "+t.transferredTo:""):t;
+  document.getElementById("transcriptsList").innerHTML=transcripts.map(t=>'<div class="tc-card"><div class="tc-h"><div><div class="tc-n">'+t.businessName+'</div><div class="tc-t">'+new Date(t.createdAt).toLocaleString()+(t.duration?" · "+t.duration+"s":"")+'</div></div><span class="badge '+oc(t)+'">'+ol(t)+'</span></div><div class="tc-b">'+(t.transcript||[]).map(l=>'<div class="le '+(l.speaker==="SARAH"?"tc-sarah":"tc-lead")+'"><strong>'+l.speaker+':</strong> '+l.text+'</div>').join("")+'</div></div>').join("");
+}
+async function addTraining(){
+  const url=document.getElementById("ytUrl").value.trim();
+  if(!url)return addLog("trainingLog","Paste a YouTube URL first","error");
+  addLog("trainingLog","Fetching video and extracting techniques...","info");
+  try{
+    const r=await fetch("/api/training/add",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({url})});
+    const d=await r.json();
+    if(d.success){addLog("trainingLog","✓ Added: "+d.title+" ("+d.techniques.length+" techniques)","success");document.getElementById("ytUrl").value="";loadTraining();}
+    else addLog("trainingLog","Error: "+d.error,"error");
+  }catch(e){addLog("trainingLog","Error: "+e.message,"error");}
+}
+async function loadTraining(){
+  const t=await fetch("/api/training").then(r=>r.json());
+  document.getElementById("videosList").innerHTML=t.videos.length?t.videos.map(v=>'<div class="vc"><div class="vc-t">'+v.title+'</div><div class="vc-c">'+v.channel+' · '+new Date(v.addedAt).toLocaleDateString()+'</div><div style="font-size:11px;color:var(--m)">'+v.techniques.length+' techniques</div></div>').join(""):'<div style="color:var(--m);font-size:13px">No videos added yet</div>';
+  document.getElementById("techniquesList").innerHTML=t.techniques.length?t.techniques.map(t=>'<div class="technique">'+t+'</div>').join(""):'<div style="color:var(--m);font-size:13px">No techniques yet</div>';
+}
+async function loadSarah(){
+  const[learnings,stats]=await Promise.all([fetch("/api/learnings").then(r=>r.json()),fetch("/api/stats").then(r=>r.json())]);
+  document.getElementById("rickCount").textContent=stats.rickTransfers||0;
+  document.getElementById("vedderCount").textContent=stats.vedderTransfers||0;
+  document.getElementById("nextTransferName").textContent=stats.nextTransferTo==="rick"?"Rick":"Vedder";
+  document.getElementById("learningsContainer").innerHTML=learnings.insights.length?'<div style="font-size:10px;color:var(--m);margin-bottom:10px">'+learnings.totalAnalyzed+' calls analyzed · Updated '+new Date(learnings.lastUpdated).toLocaleString()+'</div>'+learnings.insights.map(i=>'<div class="insight">'+i+'</div>').join(""):'<div style="color:var(--m);font-size:13px">No learnings yet</div>';
+}
+async function loadCallbacks(){
+  const callbacks=await fetch("/api/callbacks").then(r=>r.json());
+  document.getElementById("callbacksList").innerHTML=callbacks.length?callbacks.map(c=>'<div style="padding:10px 0;border-bottom:1px solid var(--b)"><div style="font-weight:600">'+c.businessName+'</div><div style="font-family:Space Mono,monospace;font-size:10px;color:var(--a);margin:2px 0">'+c.phone+'</div><div style="font-size:11px;color:var(--m)">Requested: '+c.requestedTime+' · Assigned to: '+c.repName+'</div></div>').join(""):'<div style="color:var(--m);font-size:13px">No callbacks scheduled</div>';
+}
+loadStats();
+setInterval(loadStats,30000);
+</script>
+</body>
+</html>
