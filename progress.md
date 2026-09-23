@@ -5,18 +5,18 @@
 > step when something worth remembering happens (a decision, a cost, a
 > date).
 
-**Current stage: Stage 1 — Basics**
+**Current stage: Stage 2 — Business setup**
 
 ---
 
-## Stage 1: Basics (CURRENT)
-- [ ] Understand how dropshipping actually works (money flow, who does what)
-- [ ] Understand realistic expectations (most stores make $0; this takes
+## Stage 1: Basics — COMPLETE
+- [x] Understand how dropshipping actually works (money flow, who does what)
+- [x] Understand realistic expectations (most stores make $0; this takes
       months, not days)
 - [x] Set a starting budget I'm fully OK losing
 - [x] Confirm starting budget in `config.json` (`starting_budget`)
 
-## Stage 2: Business setup
+## Stage 2: Business setup (CURRENT)
 - [ ] Decide sole proprietor vs LLC for now
 - [ ] Get an EIN (free, from IRS.gov)
 - [ ] Open a separate business bank account
@@ -91,6 +91,15 @@
 (Newest at top. The coach adds an entry here whenever something worth
 remembering happens.)
 
+- 2026-09-23 — Stage 1 confirmed complete (user acknowledged $0-is-normal,
+  months-not-days reality). Moving to Stage 2: Business setup.
+- 2026-09-23 — Niche: not committed to pets specifically, open to
+  whatever tests best. Pets flagged as a possible starting direction but
+  needs a narrow, non-saturated angle (interactive toys, feeding/
+  enrichment gadgets, travel/outdoor gear, grooming tools) — no
+  ingestible or topical/medical pet products, ever.
+- 2026-09-23 — Ads preference: TikTok ads only, no Meta/Facebook ads.
+  `ads-coach` should skip Meta entirely at Stage 9.
 - 2026-09-23 — Starting budget confirmed at $250 (the amount fully OK to
   lose). `config.json` `starting_budget` updated from 500 to 250.
 - 2026-09-23 — System set up.
