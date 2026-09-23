@@ -4,5 +4,5 @@
   "min_net_margin": 0.15,
   "payment_fee_pct": 0.029,
   "payment_fee_flat": 0.30,
-  "starting_budget": 500
+  "starting_budget": 250
 }

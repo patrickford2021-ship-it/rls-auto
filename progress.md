@@ -13,8 +13,8 @@
 - [ ] Understand how dropshipping actually works (money flow, who does what)
 - [ ] Understand realistic expectations (most stores make $0; this takes
       months, not days)
-- [ ] Set a starting budget I'm fully OK losing
-- [ ] Confirm starting budget in `config.json` (`starting_budget`)
+- [x] Set a starting budget I'm fully OK losing
+- [x] Confirm starting budget in `config.json` (`starting_budget`)
 
 ## Stage 2: Business setup
 - [ ] Decide sole proprietor vs LLC for now
@@ -91,4 +91,6 @@
 (Newest at top. The coach adds an entry here whenever something worth
 remembering happens.)
 
-- 2026-09-23 — System set up. Starting budget not yet confirmed with user.
+- 2026-09-23 — Starting budget confirmed at $250 (the amount fully OK to
+  lose). `config.json` `starting_budget` updated from 500 to 250.
+- 2026-09-23 — System set up.
