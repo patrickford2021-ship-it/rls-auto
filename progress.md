@@ -20,7 +20,8 @@
 - [x] Decide sole proprietor vs LLC for now (sole proprietor — using SSN)
 - [ ] Get an EIN (free, from IRS.gov) — optional for now since SSN works,
       but worth doing before creating more supplier accounts
-- [ ] Open a separate business bank account
+- [x] Open a separate business bank account — user chose to use an
+      existing bank account instead of opening a new dedicated one
 - [ ] Register for NY sales tax (Certificate of Authority) — must be done
       before taking any real (non-test) orders
 - [x] Set up basic bookkeeping (this system's `data/ledger.csv`)
@@ -94,6 +95,13 @@
 (Newest at top. The coach adds an entry here whenever something worth
 remembering happens.)
 
+- 2026-09-24 — Skipped opening a new dedicated business bank account;
+  user will use an existing account instead. Starting NY sales tax
+  Certificate of Authority registration (free, via ny.gov ->
+  businessexpress.ny.gov). Hard rule: cannot legally sell in NY until the
+  certificate actually arrives (~5 business days after applying; NY
+  guidance says apply 20+ days before first sale). No products/sales yet,
+  so good timing to start now.
 - 2026-09-24 — User got ahead of the roadmap on their own in the Shopify
   app: picked the $29/month plan (now charging — logged in
   `data/ledger.csv`) and set up Shopify Payments using their SSN (no EIN).
