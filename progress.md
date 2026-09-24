@@ -17,11 +17,13 @@
 - [x] Confirm starting budget in `config.json` (`starting_budget`)
 
 ## Stage 2: Business setup (CURRENT)
-- [ ] Decide sole proprietor vs LLC for now
-- [ ] Get an EIN (free, from IRS.gov)
+- [x] Decide sole proprietor vs LLC for now (sole proprietor — using SSN)
+- [ ] Get an EIN (free, from IRS.gov) — optional for now since SSN works,
+      but worth doing before creating more supplier accounts
 - [ ] Open a separate business bank account
-- [ ] Register for NY sales tax (Certificate of Authority)
-- [ ] Set up basic bookkeeping (this system's `data/ledger.csv`)
+- [ ] Register for NY sales tax (Certificate of Authority) — must be done
+      before taking any real (non-test) orders
+- [x] Set up basic bookkeeping (this system's `data/ledger.csv`)
 
 ## Stage 3: Niche selection
 - [ ] Pick 1-3 candidate niches
@@ -46,7 +48,8 @@
 - [ ] Create product page(s) with `store-builder`
 - [ ] Write required policy pages (shipping, returns/refunds, privacy,
       terms of service)
-- [ ] Set up payments (Shopify Payments or alternative)
+- [x] Set up payments (Shopify Payments or alternative) — done early,
+      using SSN, before niche/product were chosen
 - [ ] Connect a domain
 
 ## Stage 7: Content creation
@@ -91,6 +94,15 @@
 (Newest at top. The coach adds an entry here whenever something worth
 remembering happens.)
 
+- 2026-09-24 — User got ahead of the roadmap on their own in the Shopify
+  app: picked the $29/month plan (now charging — logged in
+  `data/ledger.csv`) and set up Shopify Payments using their SSN (no EIN).
+  No products were added (looked at "Find products to sell," backed out —
+  good, avoided unvetted products). Confirmed sole proprietorship path.
+  Recommended next: open a free business bank account (no EIN needed,
+  e.g. Found or Novo) to stop the $29/month and future payouts from
+  mixing with personal money. NY sales tax registration still needed
+  before any real (non-test) order is taken.
 - 2026-09-23 — Stage 1 confirmed complete (user acknowledged $0-is-normal,
   months-not-days reality). Moving to Stage 2: Business setup.
 - 2026-09-23 — Niche: not committed to pets specifically, open to
