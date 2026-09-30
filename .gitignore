@@ -1,4 +1,9 @@
 .env
 node_modules/
-data/
+data/*
+!data/ledger.csv
 audio/
+research/*.json
+reports/*.md
+__pycache__/
+*.pyc
