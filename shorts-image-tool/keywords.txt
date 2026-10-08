@@ -1,0 +1,13 @@
+# One search term per line. Lines starting with # are ignored.
+#
+# Start a line with a tag to pick the source:
+#   tmdb:    movies, TV shows and actors (stills, backdrops, profile photos)
+#   google:  Google Images via SerpAPI
+#   (no tag) Unsplash + Pexels + Pixabay stock photos
+#
+# You can also force a single stock site with  unsplash: / pexels: / pixabay:
+
+tmdb: Breaking Bad Walter White
+tmdb: Bryan Cranston
+google: Jim Lahey drunk Trailer Park Boys
+city skyline at night

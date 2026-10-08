@@ -1,0 +1,8 @@
+requests>=2.31
+python-dotenv>=1.0
+Pillow>=10.0
+numpy>=1.24
+# Optional but recommended: enables face detection for smarter crops.
+# If this fails to install, delete the line below and the tool still works.
+# (Pinned below 5 because OpenCV 5 removed the bundled face cascades.)
+opencv-python-headless>=4.8,<5
